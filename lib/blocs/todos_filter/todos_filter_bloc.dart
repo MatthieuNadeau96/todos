@@ -22,7 +22,7 @@ class TodosFilterBloc extends Bloc<TodosFilterEvent, TodosFilterState> {
     _todosSubscription = todosBloc.stream.listen((state) {
       print('in todoSub');
       add(
-        const UpdateTodos(),
+        const UpdateFilter(),
       );
     });
   }

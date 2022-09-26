@@ -11,8 +11,8 @@ class Todo extends Equatable {
     required this.id,
     required this.task,
     required this.description,
-    this.isCompleted,
-    this.isCancelled,
+    this.isCompleted = false,
+    this.isCancelled = false,
   });
 
   Todo copyWith({
@@ -40,16 +40,16 @@ class Todo extends Equatable {
         isCancelled,
       ];
 
-  static List<Todo> todos = [
-    Todo(
-      id: '1',
-      task: 'Sample Task 1',
-      description: "Test task 1",
-    ),
-    Todo(
-      id: '2',
-      task: 'Sample Task 2',
-      description: "Test task 2",
-    ),
-  ];
+  // static List<Todo> todos = [
+  //   Todo(
+  //     id: '1',
+  //     task: 'Sample Task 1',
+  //     description: "Test task 1",
+  //   ),
+  //   Todo(
+  //     id: '2',
+  //     task: 'Sample Task 2',
+  //     description: "Test task 2",
+  //   ),
+  // ];
 }
