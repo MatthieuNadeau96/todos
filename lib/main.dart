@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todos/blocs/todos/todos_bloc.dart';
+import 'package:todos/blocs/todos_filter/todos_filter_bloc.dart';
+import 'package:todos/models/todo_model.dart';
 import 'package:todos/screens/home_screen.dart';
 
 void main() {
@@ -17,8 +19,28 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => TodosBloc()
             ..add(
-              const LoadTodos(),
+              LoadTodos(todos: [
+                Todo(
+                  id: '1',
+                  task: 'Sample Task 1',
+                  description: "Test task 1",
+                  isCompleted: false,
+                  isCancelled: false,
+                ),
+                Todo(
+                  id: '2',
+                  task: 'Sample Task 2',
+                  description: "Test task 2",
+                  isCompleted: false,
+                  isCancelled: false,
+                ),
+              ]),
             ),
+        ),
+        BlocProvider(
+          create: (context) => TodosFilterBloc(
+            todosBloc: BlocProvider.of<TodosBloc>(context),
+          ),
         ),
       ],
       child: MaterialApp(
