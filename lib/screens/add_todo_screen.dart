@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todos/blocs/todos/todos_bloc.dart';
 import 'package:todos/models/todo_model.dart';
 
 class AddTodoScreen extends StatelessWidget {
@@ -15,27 +17,39 @@ class AddTodoScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text('Add a new task'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            _inputField('ID', controllerId),
-            _inputField('Task', controllerTask),
-            _inputField('Description', controllerDescription),
-            ElevatedButton(
-              onPressed: () {
-                var todo = Todo(
-                  id: controllerId.value.text,
-                  task: controllerId.value.text,
-                  description: controllerId.value.text,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).primaryColor,
-              ),
-              child: const Text('Add Task'),
-            )
-          ],
+      body: BlocListener<TodosBloc, TodosState>(
+        listener: (context, state) {
+          if (state is TodosLoaded) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text("Task Added!")));
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              _inputField('ID', controllerId),
+              _inputField('Task', controllerTask),
+              _inputField('Description', controllerDescription),
+              ElevatedButton(
+                onPressed: () {
+                  var todo = Todo(
+                    id: controllerId.value.text,
+                    task: controllerTask.value.text,
+                    description: controllerDescription.value.text,
+                  );
+                  context.read<TodosBloc>().add(
+                        AddTodo(todo: todo),
+                      );
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                ),
+                child: const Text('Add Task'),
+              )
+            ],
+          ),
         ),
       ),
     );
