@@ -41,7 +41,15 @@ class Todo extends Equatable {
       ];
 
   static List<Todo> todos = [
-    Todo(id: '1', task: 'Sample Task 1', description: "Test task 1"),
-    Todo(id: '2', task: 'Sample Task 2', description: "Test task 2"),
+    Todo(
+      id: '1',
+      task: 'Sample Task 1',
+      description: "Test task 1",
+    ),
+    Todo(
+      id: '2',
+      task: 'Sample Task 2',
+      description: "Test task 2",
+    ),
   ];
 }
