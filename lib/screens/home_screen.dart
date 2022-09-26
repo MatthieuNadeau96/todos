@@ -65,9 +65,21 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  BlocBuilder<TodosFilterBloc, TodosFilterState> _todosBuilder(
+  BlocConsumer<TodosFilterBloc, TodosFilterState> _todosBuilder(
       String headerText) {
-    return BlocBuilder<TodosFilterBloc, TodosFilterState>(
+    return BlocConsumer<TodosFilterBloc, TodosFilterState>(
+      listener: (context, state) {
+        if (state is TodosFilterLoaded) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: const Duration(seconds: 1),
+              content: Text(
+                'There is ${state.filteredTodos.length} Todos in your ${state.todosFilter.toString().split('.').last} list',
+              ),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         print('----> ${state}');
         if (state is TodosFilterLoading) {
